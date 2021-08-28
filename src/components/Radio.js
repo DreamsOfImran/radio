@@ -26,7 +26,7 @@ const Radio = () => {
     const api = new RadioBrowserApi(fetch.bind(window), "My Radio App")
 
     const stations = await api.searchStations({
-      tag: stationFilter,
+      language: stationFilter,
       limit: limit
     })
     setLoading(false)
