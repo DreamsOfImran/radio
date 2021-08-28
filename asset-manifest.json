@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/radio/static/css/main.b3f3f647.chunk.css",
+    "main.js": "/radio/static/js/main.b6793489.chunk.js",
+    "main.js.map": "/radio/static/js/main.b6793489.chunk.js.map",
+    "runtime-main.js": "/radio/static/js/runtime-main.e9a1e1d6.js",
+    "runtime-main.js.map": "/radio/static/js/runtime-main.e9a1e1d6.js.map",
+    "static/css/2.3e35cbb6.chunk.css": "/radio/static/css/2.3e35cbb6.chunk.css",
+    "static/js/2.4c628229.chunk.js": "/radio/static/js/2.4c628229.chunk.js",
+    "static/js/2.4c628229.chunk.js.map": "/radio/static/js/2.4c628229.chunk.js.map",
+    "index.html": "/radio/index.html",
+    "static/css/2.3e35cbb6.chunk.css.map": "/radio/static/css/2.3e35cbb6.chunk.css.map",
+    "static/css/main.b3f3f647.chunk.css.map": "/radio/static/css/main.b3f3f647.chunk.css.map",
+    "static/js/2.4c628229.chunk.js.LICENSE.txt": "/radio/static/js/2.4c628229.chunk.js.LICENSE.txt",
+    "static/media/radio.6085ad72.jpg": "/radio/static/media/radio.6085ad72.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e9a1e1d6.js",
+    "static/css/2.3e35cbb6.chunk.css",
+    "static/js/2.4c628229.chunk.js",
+    "static/css/main.b3f3f647.chunk.css",
+    "static/js/main.b6793489.chunk.js"
+  ]
+}
