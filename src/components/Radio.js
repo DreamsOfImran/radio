@@ -13,11 +13,27 @@ const Radio = () => {
   const [stations, setStations] = useState()
   const [limit, setLimit] = useState(30)
   const [stationFilter, setStationFilter] = useState("tamil")
+  const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
-    setupApi(stationFilter).then(data => {
-      setStations(data)
-    })
+    const storedFavorites = JSON.parse(localStorage.getItem("radio_favorites"))
+    if(storedFavorites) {
+      setFavorites(storedFavorites)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("radio_favorites", JSON.stringify(favorites))
+  }, [favorites])
+
+  useEffect(() => {
+    if(stationFilter !== "favorites") {
+      setupApi(stationFilter).then(data => {
+        setStations(data)
+      })
+    } else {
+      setStations(favorites)
+    }
     // eslint-disable-next-line
   }, [stationFilter, limit])
 
@@ -35,6 +51,7 @@ const Radio = () => {
   }
 
   const filters = [
+    "favorites",
     "tamil",
     "english",
     "hindi",
@@ -43,6 +60,18 @@ const Radio = () => {
 
   const setDefaultSrc = (event) => {
     event.target.src = defaultImage
+  }
+
+  const handleFavorites = (station) => {
+    if(favorites.some(f => f.changeId === station.changeId)) {
+      const removeFavorite = favorites.filter(f => f.changeId !== station.changeId)
+      setFavorites(removeFavorite)
+      if(stationFilter === "favorites") {
+        setStations(removeFavorite)
+      }
+    } else {
+      setFavorites([...favorites, station])
+    }
   }
 
   return (
@@ -67,6 +96,9 @@ const Radio = () => {
         <div className="stations">
           {stations && stations.map((station, index) => (
             <div className="station" key={index}>
+              <div className="favorite" onClick={() => {handleFavorites(station)}}>
+                {favorites.some(f => f.changeId === station.changeId) ? "♥" : "♡"}
+              </div>
               <div className="stationName">
                 <img
                   src={station.favicon}

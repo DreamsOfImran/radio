@@ -107,6 +107,16 @@ h2 {
   }
 }
 
+.favorite {
+  color: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 0.25em;
+  margin-top: 0.25em;
+  cursor: pointer;
+}
+
 .stations {
   display: grid;
   grid-template-columns: repeat(3, 33%);
@@ -114,6 +124,7 @@ h2 {
 }
 
 .station {
+  position: relative;
   font-size: 1.2em;
   border: 1px solid rgb(76, 62, 95);
   margin: 0.25em;
