@@ -13,26 +13,26 @@ const Radio = () => {
   const [stations, setStations] = useState()
   const [limit, setLimit] = useState(30)
   const [stationFilter, setStationFilter] = useState("tamil")
-  const [favorites, setFavorites] = useState([])
+  const [favourites, setFavourites] = useState([])
 
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("radio_favorites"))
-    if(storedFavorites) {
-      setFavorites(storedFavorites)
+    const storedFavourites = JSON.parse(localStorage.getItem("radio_favourites"))
+    if(storedFavourites) {
+      setFavourites(storedFavourites)
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem("radio_favorites", JSON.stringify(favorites))
-  }, [favorites])
+    localStorage.setItem("radio_favourites", JSON.stringify(favourites))
+  }, [favourites])
 
   useEffect(() => {
-    if(stationFilter !== "favorites") {
+    if(stationFilter !== "favourites") {
       setupApi(stationFilter).then(data => {
         setStations(data)
       })
     } else {
-      setStations(favorites)
+      setStations(favourites)
     }
     // eslint-disable-next-line
   }, [stationFilter, limit])
@@ -51,7 +51,7 @@ const Radio = () => {
   }
 
   const filters = [
-    "favorites",
+    "favourites",
     "tamil",
     "english",
     "hindi",
@@ -62,15 +62,15 @@ const Radio = () => {
     event.target.src = defaultImage
   }
 
-  const handleFavorites = (station) => {
-    if(favorites.some(f => f.changeId === station.changeId)) {
-      const removeFavorite = favorites.filter(f => f.changeId !== station.changeId)
-      setFavorites(removeFavorite)
-      if(stationFilter === "favorites") {
-        setStations(removeFavorite)
+  const handleFavourites = (station) => {
+    if(favourites.some(f => f.changeId === station.changeId)) {
+      const removeFavourite = favourites.filter(f => f.changeId !== station.changeId)
+      setFavourites(removeFavourite)
+      if(stationFilter === "favourites") {
+        setStations(removeFavourite)
       }
     } else {
-      setFavorites([...favorites, station])
+      setFavourites([...favourites, station])
     }
   }
 
@@ -96,8 +96,8 @@ const Radio = () => {
         <div className="stations">
           {stations && stations.map((station, index) => (
             <div className="station" key={index}>
-              <div className="favorite" onClick={() => {handleFavorites(station)}}>
-                {favorites.some(f => f.changeId === station.changeId) ? "♥" : "♡"}
+              <div className="favourite" onClick={() => {handleFavourites(station)}}>
+                {favourites.some(f => f.changeId === station.changeId) ? "♥" : "♡"}
               </div>
               <div className="stationName">
                 <img
