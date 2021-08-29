@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RadioBrowserApi } from 'radio-browser-api'
 import AudioPlayer from 'react-h5-audio-player'
 import defaultImage from '../radio.jpg'
@@ -10,10 +10,16 @@ const LIMIT_OPTIONS = [10, 20, 30, 40, 50]
 
 const Radio = () => {
   const [loading, setLoading] = useState(false)
-  const [stations, setStations] = useState()
+  const [stations, setStations] = useState([])
   const [limit, setLimit] = useState(30)
   const [stationFilter, setStationFilter] = useState("tamil")
   const [favourites, setFavourites] = useState([])
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+  const playerRef = useRef([])
+
+  useEffect(() => {
+    playerRef.current = playerRef.current.slice(0, stations.length)
+  }, [stations])
 
   useEffect(() => {
     const storedFavourites = JSON.parse(localStorage.getItem("radio_favourites"))
@@ -74,6 +80,15 @@ const Radio = () => {
     }
   }
 
+  const pauseOtherStations = (index) => {
+    if(currentlyPlaying !== null) {
+      playerRef.current[currentlyPlaying].audio.current.pause()
+      setCurrentlyPlaying(index)
+    } else {
+      setCurrentlyPlaying(index)
+    }
+  }
+
   return (
     <div className="radio">
       <div className="filters">
@@ -110,6 +125,7 @@ const Radio = () => {
               </div>
 
               <AudioPlayer
+                ref={el => playerRef.current[index] = el}
                 className="player"
                 src={station.urlResolved}
                 showJumpControls={false}
@@ -117,6 +133,7 @@ const Radio = () => {
                 customProgressBarSection={[]}
                 customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
                 autoPlayAfterSrcChange={false}
+                onPlay={() => pauseOtherStations(index)}
               />
             </div>
           ))}
