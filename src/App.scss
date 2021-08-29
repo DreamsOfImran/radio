@@ -58,7 +58,7 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .radio {
@@ -117,6 +117,15 @@ h2 {
   cursor: pointer;
 }
 
+.selectedStation {
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
 .stations {
   display: grid;
   grid-template-columns: repeat(3, 33%);
@@ -163,6 +172,31 @@ img {
   margin: 0 0.25em;
 }
 
+.playButton {
+  width: 100%;
+  background-color: rgb(76, 62, 95);
+  color: rgb(235, 235, 235);
+  border-radius: 10px;
+  border: none;
+  padding: 12px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Architects Daughter", cursive;
+  position: relative;
+  height: 2.85em;
+
+  &:hover {
+    cursor: pointer;
+    background: linear-gradient(to bottom right, #e36bae, #fb743e);
+  }
+
+  &.selected {
+    background: linear-gradient(to bottom right, #e36bae, #fb743e);
+  }
+}
+
 audio {
   width: 100%;
 }
@@ -196,6 +230,10 @@ audio {
     grid-template-columns: repeat(1, 100%);
   }
 
+  .selectedStation {
+    grid-template-columns: repeat(1, 100%);
+  }
+
   img {
     display: none;
   }
@@ -210,11 +248,13 @@ audio {
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
+  position: relative;
 }
 .loader {
   color: #ffffff;
   text-indent: -9999em;
-  margin: 88px auto;
+  // margin: 88px auto;
+  margin: auto;
   position: relative;
   font-size: 11px;
   -webkit-transform: translateZ(0);
@@ -222,12 +262,14 @@ audio {
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+
 }
 .loader:before,
 .loader:after {
   position: absolute;
   top: 0;
   content: '';
+  text-align: center;
 }
 .loader:before {
   left: -1.5em;

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Loader = () => {
+const Loader = ({style}) => {
   return (
-    <div className="loader">
+    <div className="loader" style={style}>
       Loading...
     </div>
   )
