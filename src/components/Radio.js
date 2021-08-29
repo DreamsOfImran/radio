@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { RadioBrowserApi } from 'radio-browser-api'
 import AudioPlayer from 'react-h5-audio-player'
+import ScrollText from 'react-scroll-text'
+
 import defaultImage from '../radio.jpg'
 import Loader from './Loader'
 
@@ -16,12 +18,7 @@ const Radio = () => {
   const [limit, setLimit] = useState(30)
   const [stationFilter, setStationFilter] = useState("tamil")
   const [favourites, setFavourites] = useState([])
-  // const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const [selectedStation, setSelectedStation] = useState({})
-
-  // useEffect(() => {
-  //   playerRef.current = playerRef.current.slice(0, stations.length)
-  // }, [stations])
 
   useEffect(() => {
     const storedFavourites = JSON.parse(localStorage.getItem("radio_favourites"))
@@ -78,51 +75,15 @@ const Radio = () => {
         setStations(removeFavourite)
       }
     } else {
+      if(stationFilter === "favourites") {
+        setStations([...favourites, station])
+      }
       setFavourites([...favourites, station])
     }
   }
 
-  // const pauseOtherStations = (index) => {
-  //   if(currentlyPlaying !== null) {
-  //     playerRef.current[currentlyPlaying].audio.current.pause()
-  //     setCurrentlyPlaying(index)
-  //   } else {
-  //     setCurrentlyPlaying(index)
-  //   }
-  // }
-
   return (
     <div className="radio">
-      <div className="selectedStation">
-        <div></div>
-        <div className="station">
-          <div className="favourite" onClick={() => {handleFavourites(selectedStation)}}>
-            {favourites.some(f => f.changeId === selectedStation.changeId) ? "♥" : "♡"}
-          </div>
-          <div className="stationName">
-            <img
-              src={selectedStation.favicon || defaultImage}
-              alt="station logo"
-              className="logo"
-              onError={setDefaultSrc}
-            />
-            <div className="name">{selectedStation.name || "Select a station"}</div>
-          </div>
-
-          <AudioPlayer
-            ref={playerRef}
-            className="player"
-            src={selectedStation.urlResolved}
-            showJumpControls={false}
-            layout="stacked"
-            customProgressBarSection={[]}
-            customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-            autoPlayAfterSrcChange={true}
-            autoPlay
-          />
-        </div>
-      </div>
-
       <div className="filters">
         {filters.map(filter => (
           <span
@@ -161,22 +122,37 @@ const Radio = () => {
               >
                 {selectedStation.changeId === station.changeId ? <Loader style={{fontSize: '5px'}} /> : "Play"}
               </button>
-
-              {/* <AudioPlayer
-                ref={el => playerRef.current[index] = el}
-                className="player"
-                src={station.urlResolved}
-                showJumpControls={false}
-                layout="stacked"
-                customProgressBarSection={[]}
-                customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-                autoPlayAfterSrcChange={false}
-                onPlay={() => pauseOtherStations(index)}
-              /> */}
             </div>
           ))}
         </div>
       )}
+      <div className="fixedContainer">
+        <div className="fixedPlayer">
+          <div className="fixedPlayerName">
+            <img
+              src={selectedStation.favicon || defaultImage}
+              alt="station logo"
+              className="fixedPlayerLogo"
+              onError={setDefaultSrc}
+            />
+            <ScrollText speed={70} style={{ textAlign: 'center' }}>
+              {selectedStation.name || "Select a station"}
+            </ScrollText>
+
+            <AudioPlayer
+              ref={playerRef}
+              className="player"
+              src={selectedStation.urlResolved}
+              showJumpControls={false}
+              layout="stacked"
+              customProgressBarSection={[]}
+              customControlsSection={["VOLUME_CONTROLS", "MAIN_CONTROLS"]}
+              autoPlayAfterSrcChange={true}
+              autoPlay
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
