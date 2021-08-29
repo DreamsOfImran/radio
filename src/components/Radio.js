@@ -139,9 +139,9 @@ const Radio = () => {
               {selectedStation.name || "Select a station"}
             </ScrollText>
 
-            <div className="favourite" onClick={() => {handleFavourites(selectedStation)}}>
+            {!!Object.keys(selectedStation).length && (<div className="favourite" onClick={() => {handleFavourites(selectedStation)}}>
               {favourites.some(f => f.changeId === selectedStation.changeId) ? "♥" : "♡"}
-            </div>
+            </div>)}
 
             <AudioPlayer
               ref={playerRef}
