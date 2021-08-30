@@ -1,10 +1,9 @@
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   if(req.method === "GET") {
-    res.json([
-      { name: "Imran Basha", location: "Chennai" },
-      { name: "Nothing comes to mind", location: "Inside my mind" }
-    ])
+    fetch("http://de1.api.radio-browser.info/json/servers")
+      .then(response => response.json())
+      .then(data => res.json(data))
   } else {
-    
+
   }
 }
