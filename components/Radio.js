@@ -44,17 +44,6 @@ const Radio = () => {
 
   const setupApi = async (stationFilter) => {
     setLoading(true);
-    // const api = new RadioBrowserApi("My Radio App");
-
-    // const stations = RadioBrowser.getStations({
-    //   limit: limit,
-    //   by: "tag",
-    //   searchterm: stationFilter,
-    // });
-
-    // const { data: stations } = await axios.get(
-    //   `https://nl1.api.radio-browser.info/json/stations/search?language=${stationFilter}&limit=${limit}&hidebroker=true`
-    // );
 
     const { data: stations } = await axios.get("/api/radio", {
       params: {
